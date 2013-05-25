@@ -7,14 +7,128 @@
     %title
       Pythia
     %script{:src => "//code.jquery.com/jquery-1.10.0.min.js", :type => "text/javascript"}
-    %script{:src => "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js", :type => "text/javascript"}
-    %link{:href => "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}
+    / %script{:src => "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js", :type => "text/javascript"}
+    %script{:src => "/js/bootstrap.min.js", :type => "text/javascript"}
+    %link{:href => "/bootstrap.min.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}
+
+    %link{:href => "/font-awesome.min.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}
+    / %link{:href => "/main.css", rel: "stylesheet", type: "text/css"}
 
     :css
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
       }
       
+      .posted-questions {
+        margin-top: 50px;
+      }
+      
+      .posted-questions ul {
+        margin: 0;
+      }
+      
+      .posted-question {
+        list-style: none;
+      }
+      
+      .question {
+        margin: 0;
+        padding: 2%;
+        width: 96%;
+      }
+    
+      .form-footer {
+        width: 100%;
+        margin-top: 10px;
+      }
+      
+      .left-half, .right-half {
+        display: inline-block;
+        position: relative;
+        width: 50%;
+      }
+    
+      .left-half {
+        text-align: left;
+      }
+    
+      .right-half {
+        text-align: right;
+      }
+      
+      body {
+        // background-color: #EFEFEF;
+      }
+      
+      .answers {
+        margin-top: 10px;
+        // display: none;
+      }
+      
+      .pros_and_cons {
+        // display: none;
+        // background-color: #EFEFEF;
+        margin: 30px 0 0 0;
+        padding: 5px;
+      }
+      
+      .pros, .cons {
+        display: inline-block;
+        width: 50%;
+        vertical-align: top;
+      }
+      
+      .pros input {
+        width: 90%;
+      }
+      
+      .cons input {
+        width: 90%;
+      }
+      
+      
+      
+    :javascript
+      $(function() {
+        var lastAnswerChar = 65 + 1; // B
+        $('.question').focus(function() {
+          $(".answers").fadeIn();
+          $(".pros_and_cons").fadeIn();
+        });
+        
+        $('.answer-actions .plus').click(function(e) {
+          e.preventDefault();
+          ++lastAnswerChar;
+          $(".answer-inputs").append("&nbsp;<input name='answer' type='text' placeholder='Answer " + String.fromCharCode(lastAnswerChar) + "'/>");
+        });
+
+        $('.answer-actions .minus').click(function(e) {
+          e.preventDefault();
+          lastAnswerChar--;
+          $(".answer-inputs input").last().remove();
+        });
+        
+        $('.pro-actions .plus').click(function(e) {
+          e.preventDefault();
+          $(".pro-inputs").append("&nbsp;<input name='pro' type='text' placeholder='Example: I like it.'/>");
+        });
+
+        $('.pro-actions .minus').click(function(e) {
+          e.preventDefault();
+          $(".pro-inputs input").last().remove();
+        });
+        
+        $('.con-actions .plus').click(function(e) {
+          e.preventDefault();
+          $(".con-inputs").append("&nbsp;<input name='con' type='text' placeholder='Example: It's not legal.'/>");
+        });
+
+        $('.con-actions .minus').click(function(e) {
+          e.preventDefault();
+          $(".con-inputs input").last().remove();
+        });
+      });
+
   %body
     .navbar.navbar-inverse.navbar-fixed-top
       .navbar-inner
@@ -29,8 +143,63 @@
               %li.active
                 %a{:href => "#"} Home
               %li
-                %a{:href => "#about"} Inbox (12)
+                %a{:href => "#about"} Answers (12)
     
-    .container
-      %h1 
-        Welcome to Pythia!
+    .container.main
+      .row
+        .span6.middle.offset3
+          %form.question-form 
+            %fieldset
+              %label{for: "question"} 
+                %h4 Your question
+              %textarea.question{id: "question", id: "question", placeholder: "Example: Should I continue being cruel to small, helpless animals?"}
+            %fieldset.answers
+              %h4 Possible answers
+              .answer-inputs
+                %input{name: "answer", type: "text", placeholder: "Answer A"}
+                %input{name: "answer", type: "text", placeholder: "Answer B"}
+              .answer-actions
+                %button.btn.btn-tiny.plus
+                  %i.icon-plus
+                %button.btn.btn-tiny.minus
+                  %i.icon-minus
+            %fieldset.pros_and_cons
+              .pros>
+                %h4 Pros 
+                .pro-inputs
+                  %input.pro{name: "pro", type: "text", placeholder: "Example: I simply like it"}
+                .pro-actions
+                  %button.btn.btn-tiny.plus
+                    %i.icon-plus
+                  %button.btn.btn-tiny.minus
+                    %i.icon-minus
+              .cons
+                %h4 Cons
+                .con-inputs
+                  %input.con{name: "con", type: "text", placeholder: "Example: It is illegal."}
+                .con-actions
+                  %button.btn.btn-tiny.plus
+                    %i.icon-plus
+                  %button.btn.btn-tiny.minus
+                    %i.icon-minus
+            .form-footer
+              .left-half>
+                %button.btn.btn-default.btn-large 
+                  %strong 
+                    %i.icon-globe
+                    Ask the crowd
+            
+              .right-half
+                %button.btn.btn-default.btn-large 
+                  %strong 
+                    %i.icon-facebook-sign
+                    Ask friends
+      .row
+        .span6.offset3.posted-questions
+          %ul
+            %h4
+              %i.icon-globe
+              Questions from the crowd
+            %li.well.posted-question Should I be cruel to animals?
+            %li.well.posted-question Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            %li.well.posted-question Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
