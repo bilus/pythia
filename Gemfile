@@ -1,0 +1,6 @@
+source 'https://rubygems.org'
+gem 'sinatra'
+gem 'sinatra_more'
+gem 'haml'
+gem 'sass'
+gem 'mongo'
