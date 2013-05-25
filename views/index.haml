@@ -11,6 +11,8 @@
     %script{:src => "/js/bootstrap.min.js", :type => "text/javascript"}
     %script{:src => "/underscore.js", :type => "text/javascript"}
     %link{:href => "/bootstrap.min.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}
+    %link{:href => "/main.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}
+    %link{:href => "/custom-styles.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}
 
     %link{:href => "/font-awesome.min.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}
     / %link{:href => "/main.css", rel: "stylesheet", type: "text/css"}
@@ -156,7 +158,9 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %a.brand{:href => "#"} Pythia
+          %a.brand{:href => "#"}
+            %img(src="http://themearmada.com/demos/breakroom/img/logo.png")
+
           .nav-collapse.collapse
             %ul.nav
               %li.active
@@ -203,13 +207,13 @@
                     %i.icon-minus
             .form-footer
               .left-half>
-                %button.btn.btn-primary.btn-large.ask_crowd
+                %button.btn.btn-primary.btn-large.ask_crowd.btn-main
                   %strong 
                     %i.icon-globe
                     Ask the crowd
             
               .right-half
-                %button.btn.btn-primary.btn-large.ask_friends
+                %button.btn.btn-primary.btn-large.btn-main.ask_friends
                   %strong 
                     %i.icon-facebook-sign
                     Ask friends
