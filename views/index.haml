@@ -9,6 +9,7 @@
     %script{:src => "//code.jquery.com/jquery-1.10.0.min.js", :type => "text/javascript"}
     / %script{:src => "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js", :type => "text/javascript"}
     %script{:src => "/js/bootstrap.min.js", :type => "text/javascript"}
+    %script{:src => "/underscore.js", :type => "text/javascript"}
     %link{:href => "/bootstrap.min.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}
 
     %link{:href => "/font-awesome.min.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}
@@ -100,8 +101,6 @@
           $(".pros_and_cons").fadeIn();
         });
         
-        
-        
         $('.answer-actions .plus').click(function(e) {
           e.preventDefault();
           ++lastAnswerChar;
@@ -132,6 +131,20 @@
         $('.con-actions .minus').click(function(e) {
           e.preventDefault();
           $(".con-inputs input").last().remove();
+        });
+        
+        $('.ask_crowd').click(function(e) {
+          e.preventDefault();
+          var q = $(".question").val();
+          
+          var answers = [];
+          $(".answer-inputs input").each(function(i, answer) {
+            answers.push($(answer).val());
+          });
+
+          var template = _.template($("#posted-question-template").html());
+          $(".posted-questions ul").prepend(template({question: q, answers: answers}));
+          
         });
       });
 
@@ -184,28 +197,28 @@
                 .con-inputs
                   %input.con{name: "con", type: "text", placeholder: "Example: It is illegal."}
                 .con-actions
-                  %button.btn.btn-tiny.plus.ask_crowd
+                  %button.btn.btn-tiny.plus
                     %i.icon-plus
-                  %button.btn.btn-tiny.minus.ask_friends
+                  %button.btn.btn-tiny.minus
                     %i.icon-minus
             .form-footer
               .left-half>
-                %button.btn.btn-primary.btn-large 
+                %button.btn.btn-primary.btn-large.ask_crowd
                   %strong 
                     %i.icon-globe
                     Ask the crowd
             
               .right-half
-                %button.btn.btn-primary.btn-large 
+                %button.btn.btn-primary.btn-large.ask_friends
                   %strong 
                     %i.icon-facebook-sign
                     Ask friends
       .row
         .span6.offset3.posted-questions
+          %h4
+            %i.icon-globe
+            Questions from the crowd
           %ul
-            %h4
-              %i.icon-globe
-              Questions from the crowd
             %li.well.posted-question 
               .left-half>
                 .text Should I change my job?
@@ -227,3 +240,15 @@
                 .choices
                   .btn.btn-small Well, yes...
                   .btn.btn-small Never in your life!
+
+
+%script{type: "text/html", id: "posted-question-template"}
+  %li.well.posted-question 
+    .left-half>
+      .text <%= question %>
+    .right-half
+      .choices
+        <% _.each(answers, function(answer) { %>
+        .btn.btn-small <%= answer %>
+        <% }); %>
+  
