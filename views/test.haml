@@ -1,3 +1,19 @@
+:javascript
+
+  $(function() {
+    $(".answers .btn").click(function(e) {
+      e.preventDefault();
+      $(e.target).parents("li").fadeOut();
+      var questionsLeft = $(".questions li:visible").length;
+      console.log(questionsLeft)
+      if (questionsLeft === 1) {
+        $(".take_test").hide(function() {
+          $(".test_result").fadeIn();
+        });
+      }
+    });
+  });
+
 :css
   .questions li {
     list-style: none;
@@ -35,10 +51,16 @@
     border: none;
   }
   
+  .test_result {
+    display: none;
+    text-align: center;
+  }
+  
 .row
   .span6.offset3
-    %h2 DISCOVER YOUR DECISION-MAKING STYLE!
-    %h3 Take a test...
+    .take_test
+      %h2 DISCOVER YOUR DECISION-MAKING STYLE!
+      %h3 Take a test...
     
     %ul.questions
       %li.boxed
@@ -48,45 +70,48 @@
           .btn.btn-main-small Yes
           .btn.btn-main-small No
 
-      %li.boxed
-        .q-no 2
-        .question.lead You like to be engaged in an active and fast-paced job               
-        .answers
-          .btn.btn-main-small Yes
-          .btn.btn-main-small No
- 
-      %li 
-        .q-no 3
-        .question.lead You enjoy having a wide circle of acquaintances                           
-        .answers
-          .btn.btn-main-small Yes
-          .btn.btn-main-small No
- 
-      %li 
-        .q-no 4
-        .question.lead You feel involved when watching TV soaps	                                 
-        .answers
-          .btn.btn-main-small Yes
-          .btn.btn-main-small No
- 
-      %li 
-        .q-no 5
-        .question.lead You are usually the first to react to a sudden event, such as the telephone ringing or unexpected question?
-        .answers
-          .btn.btn-main-small Yes
-          .btn.btn-main-small No
- 
-      %li 
-        .q-no 6
-        .question.lead You are more interested in a general idea than in the details of its realization? 
-        .answers
-          .btn.btn-main-small Yes
-          .btn.btn-main-small No
-      
+      / %li.boxed
+      /   .q-no 2
+      /   .question.lead You like to be engaged in an active and fast-paced job               
+      /   .answers
+      /     .btn.btn-main-small Yes
+      /     .btn.btn-main-small No
+      /  
+      / %li 
+      /   .q-no 3
+      /   .question.lead You enjoy having a wide circle of acquaintances                           
+      /   .answers
+      /     .btn.btn-main-small Yes
+      /     .btn.btn-main-small No
+      /  
+      / %li 
+      /   .q-no 4
+      /   .question.lead You feel involved when watching TV soaps                                   
+      /   .answers
+      /     .btn.btn-main-small Yes
+      /     .btn.btn-main-small No
+      /  
+      / %li 
+      /   .q-no 5
+      /   .question.lead You are usually the first to react to a sudden event, such as the telephone ringing or unexpected question?
+      /   .answers
+      /     .btn.btn-main-small Yes
+      /     .btn.btn-main-small No
+      /  
+      / %li 
+      /   .q-no 6
+      /   .question.lead You are more interested in a general idea than in the details of its realization? 
+      /   .answers
+      /     .btn.btn-main-small Yes
+      /     .btn.btn-main-small No
+      / 
+      / 
+      / %li.boxed
+      /   .q-no 7
+      /   .question.lead You tend to be unbiased even if this might endanger your good relations with people          
+      /   .answers
+      /     .btn.btn-main-small Yes
+      /     .btn.btn-main-small No
 
-      %li.boxed
-        .q-no 7
-        .question.lead You tend to be unbiased even if this might endanger your good relations with people 	       
-        .answers
-          .btn.btn-main-small Yes
-          .btn.btn-main-small No
+      .test_result.boxed
+        %h1 Thank you!
