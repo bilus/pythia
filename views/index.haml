@@ -1,294 +1,78 @@
-!!! Strict
-%html{:lang => "en"}
-  %head
-    %meta{:charset => "utf-8"}
-    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
-
-    %title
-      Pythia
-    %script{:src => "//code.jquery.com/jquery-1.10.0.min.js", :type => "text/javascript"}
-    / %script{:src => "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js", :type => "text/javascript"}
-    %script{:src => "/js/bootstrap.min.js", :type => "text/javascript"}
-    %script{:src => "/underscore.js", :type => "text/javascript"}
-    %link{:href => "/bootstrap.min.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}
-    %link{:href => "/main.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}
-    %link{:href => "/custom-styles.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}
-
-    %link{:href => "/font-awesome.min.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}
-    / %link{:href => "/main.css", rel: "stylesheet", type: "text/css"}
-
-    :css
-    
-      body {
-        margin-top: 120px;
-      }
-    
-      .posted-questions {
-        margin-top: 50px;
-      }
+.row
+  .span6.middle.offset3
+    %form.question-form 
+      %fieldset
+        %label{for: "question"} 
+          %h4 Your question
+        %textarea.question{id: "question", id: "question", placeholder: "Example: Should I continue being cruel to small, helpless animals?"}
+      %fieldset.answers
+        %h4 Possible answers
+        .answer-inputs
+          %input{name: "answer", type: "text", placeholder: "Answer A"}
+          %input{name: "answer", type: "text", placeholder: "Answer B"}
+        .answer-actions
+          %button.btn.btn-tiny.plus
+            %i.icon-plus
+          %button.btn.btn-tiny.minus
+            %i.icon-minus
+      %fieldset.pros_and_cons
+        .pros>
+          %h4 Pros 
+          .pro-inputs
+            %input.pro{name: "pro", type: "text", placeholder: "Example: I simply like it"}
+          .pro-actions
+            %button.btn.btn-tiny.plus
+              %i.icon-plus
+            %button.btn.btn-tiny.minus
+              %i.icon-minus
+        .cons
+          %h4 Cons
+          .con-inputs
+            %input.con{name: "con", type: "text", placeholder: "Example: It is illegal."}
+          .con-actions
+            %button.btn.btn-tiny.plus
+              %i.icon-plus
+            %button.btn.btn-tiny.minus
+              %i.icon-minus
+      .form-footer
+        .left-half>
+          %button.btn.btn-primary.btn-large.ask_crowd.btn-main
+            %strong 
+              %i.icon-globe
+              Ask the crowd
       
-      .posted-questions ul {
-        margin: 0;
-      }
-      
-      .posted-question {
-        list-style: none;
-      }
-      
-      .question {
-        margin: 0;
-        padding: 2%;
-        width: 96%;
-      }
-    
-      .form-footer {
-        width: 100%;
-        margin-top: 10px;
-      }
-      
-      .left-half, .right-half {
-        display: inline-block;
-        position: relative;
-        width: 50%;
-      }
-    
-      .left-half {
-        text-align: left;
-      }
-    
-      .right-half {
-        text-align: right;
-      }
-      
-      body {
-        // background-color: #EFEFEF;
-      }
-      
-      .answers {
-        margin-top: 10px;
-        display: none;
-      }
-      
-      .answers input {
-        display: block;
-      }
-      
-      .pros_and_cons {
-        display: none;
-        // background-color: #EFEFEF;
-        margin: 30px 0 0 0;
-        padding: 5px;
-      }
-      
-      .pros, .cons {
-        display: inline-block;
-        width: 50%;
-        vertical-align: top;
-      }
-      
-      .pros input {
-        width: 90%;
-      }
-      
-      .cons input {
-        width: 90%;
-      }
-      
-      .build_profile .label {
-        color: white;
-        
-      }
-      
-      .build_profile {
-        width: 300px;      
-      }
-      
-      .build_profile .field {
-        color: #666;
-      }
-      
-      .build_profile_right .field {
-        color: #666;
-      }
-
-      .build_profile_right {
-        margin-top: 10px;
-      }
-      
-    :javascript
-      $(function() {
-        var lastAnswerChar = 65 + 1; // B
-        $('.question').focus(function() {
-          $(".answers").fadeIn();
-          $(".pros_and_cons").fadeIn();
-        });
-        
-        $('.answer-actions .plus').click(function(e) {
-          e.preventDefault();
-          ++lastAnswerChar;
-          $(".answer-inputs").append("<input name='answer' type='text' placeholder='Answer " + String.fromCharCode(lastAnswerChar) + "'/>");
-        });
-
-        $('.answer-actions .minus').click(function(e) {
-          e.preventDefault();
-          lastAnswerChar--;
-          $(".answer-inputs input").last().remove();
-        });
-        
-        $('.pro-actions .plus').click(function(e) {
-          e.preventDefault();
-          $(".pro-inputs").append("&nbsp;<input name='pro' type='text' placeholder='Example: I like it.'/>");
-        });
-
-        $('.pro-actions .minus').click(function(e) {
-          e.preventDefault();
-          $(".pro-inputs input").last().remove();
-        });
-        
-        $('.con-actions .plus').click(function(e) {
-          e.preventDefault();
-          $(".con-inputs").append("&nbsp;<input name='con' type='text' placeholder='Example: It's not legal.'/>");
-        });
-
-        $('.con-actions .minus').click(function(e) {
-          e.preventDefault();
-          $(".con-inputs input").last().remove();
-        });
-        
-        $('.ask_crowd').click(function(e) {
-          e.preventDefault();
-          var q = $(".question").val();
-          
-          var answers = [];
-          $(".answer-inputs input").each(function(i, answer) {
-            answers.push($(answer).val());
-          });
-
-          var template = _.template($("#posted-question-template").html());
-          $(".posted-questions ul").prepend(template({question: q, answers: answers}));
-        });
-        
-        function buildProfile() {
-          window.location = "/test";
-        }
-        
-        $(".build_profile").click(function() {
-          buildProfile();
-        });
-
-        $(".build_profile_right").click(function() {
-          buildProfile();
-        });
-      });
-
-  %body
-    .navbar.navbar-inverse.navbar-fixed-top
-      .navbar-inner
-        .container
-          %button.btn.btn-navbar{"data-target" => ".nav-collapse", "data-toggle" => "collapse", :type => "button"}
-            %span.icon-bar
-            %span.icon-bar
-            %span.icon-bar
-          %a.brand{:href => "#"}
-            %img(src="http://themearmada.com/demos/breakroom/img/logo.png")
-
-          .nav-collapse.collapse
-            %ul.nav
-              %li.active
-                %a{:href => "#"} Home
-              %li
-                %a{:href => "#about"} Answers (12)
-              %li.build_profile
-                .progress-bar
-                  .progress
-                    %span.field
-                      Complete your profile
-                    %span.field-value.fade-in 15%
-                    .bar{style: "width: 15%;"}
-          .build_profile_right.pull-right
-            .progress-bar{style: "width: 300px;"}
-              .progress
-                %span.field
-                  Complete your profile
-                %span.field-value.fade-in 15%
-                .bar{style: "width: 15%;"}
-                    
-    .container.main
-      .row
-        .span6.middle.offset3
-          %form.question-form 
-            %fieldset
-              %label{for: "question"} 
-                %h4 Your question
-              %textarea.question{id: "question", id: "question", placeholder: "Example: Should I continue being cruel to small, helpless animals?"}
-            %fieldset.answers
-              %h4 Possible answers
-              .answer-inputs
-                %input{name: "answer", type: "text", placeholder: "Answer A"}
-                %input{name: "answer", type: "text", placeholder: "Answer B"}
-              .answer-actions
-                %button.btn.btn-tiny.plus
-                  %i.icon-plus
-                %button.btn.btn-tiny.minus
-                  %i.icon-minus
-            %fieldset.pros_and_cons
-              .pros>
-                %h4 Pros 
-                .pro-inputs
-                  %input.pro{name: "pro", type: "text", placeholder: "Example: I simply like it"}
-                .pro-actions
-                  %button.btn.btn-tiny.plus
-                    %i.icon-plus
-                  %button.btn.btn-tiny.minus
-                    %i.icon-minus
-              .cons
-                %h4 Cons
-                .con-inputs
-                  %input.con{name: "con", type: "text", placeholder: "Example: It is illegal."}
-                .con-actions
-                  %button.btn.btn-tiny.plus
-                    %i.icon-plus
-                  %button.btn.btn-tiny.minus
-                    %i.icon-minus
-            .form-footer
-              .left-half>
-                %button.btn.btn-primary.btn-large.ask_crowd.btn-main
-                  %strong 
-                    %i.icon-globe
-                    Ask the crowd
-            
-              .right-half
-                %button.btn.btn-primary.btn-large.btn-main.ask_friends
-                  %strong 
-                    %i.icon-facebook-sign
-                    Ask friends
-      .row
-        .span6.offset3.posted-questions
-          %h4
-            %i.icon-globe
-            Questions from the crowd
-          %ul
-            %li.well.posted-question 
-              .left-half>
-                .text Should I change my job?
-              .right-half
-                .choices
-                  .btn.btn-small.m-btn Yes
-                  .btn.btn-small.m-btn No
-            %li.well.posted-question 
-              .left-half>
-                .text What car should I choose for my family?
-              .right-half
-                .choices
-                  .btn.btn-small.m-btn Ford Mondeo
-                  .btn.btn-small.m-btn Maybach
-            %li.well.posted-question 
-              .left-half>
-                .text Should I launch a startup???????
-              .right-half
-                .choices
-                  .btn.btn-small.m-btn Well, yes...
-                  .btn.btn-small.m-btn Never in your life!
+        .right-half
+          %button.btn.btn-primary.btn-large.btn-main.ask_friends
+            %strong 
+              %i.icon-facebook-sign
+              Ask friends
+.row
+  .span6.offset3.posted-questions
+    %h4
+      %i.icon-globe
+      Questions from the crowd
+    %ul
+      %li.well.posted-question 
+        .left-half>
+          .text Should I change my job?
+        .right-half
+          .choices
+            .btn.btn-small.m-btn Yes
+            .btn.btn-small.m-btn No
+      %li.well.posted-question 
+        .left-half>
+          .text What car should I choose for my family?
+        .right-half
+          .choices
+            .btn.btn-small.m-btn Ford Mondeo
+            .btn.btn-small.m-btn Maybach
+      %li.well.posted-question 
+        .left-half>
+          .text Should I launch a startup???????
+        .right-half
+          .choices
+            .btn.btn-small.m-btn Well, yes...
+            .btn.btn-small.m-btn Never in your life!
 
 
 %script{type: "text/html", id: "posted-question-template"}
@@ -301,3 +85,146 @@
         .btn.btn-small.m-btn <%= answer %>
         <% }); %>
   
+:css
+
+  body {
+    margin-top: 120px;
+  }
+
+  .posted-questions {
+    margin-top: 50px;
+  }
+  
+  .posted-questions ul {
+    margin: 0;
+  }
+  
+  .posted-question {
+    list-style: none;
+  }
+  
+  .question {
+    margin: 0;
+    padding: 2%;
+    width: 96%;
+  }
+
+  .form-footer {
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  .left-half, .right-half {
+    display: inline-block;
+    position: relative;
+    width: 50%;
+  }
+
+  .left-half {
+    text-align: left;
+  }
+
+  .right-half {
+    text-align: right;
+  }
+  
+  body {
+    // background-color: #EFEFEF;
+  }
+  
+  .answers {
+    margin-top: 10px;
+    display: none;
+  }
+  
+  .answers input {
+    display: block;
+  }
+  
+  .pros_and_cons {
+    display: none;
+    // background-color: #EFEFEF;
+    margin: 30px 0 0 0;
+    padding: 5px;
+  }
+  
+  .pros, .cons {
+    display: inline-block;
+    width: 50%;
+    vertical-align: top;
+  }
+  
+  .pros input {
+    width: 90%;
+  }
+  
+  .cons input {
+    width: 90%;
+  }
+  
+  
+:javascript
+  $(function() {
+    var lastAnswerChar = 65 + 1; // B
+    $('.question').focus(function() {
+      $(".answers").fadeIn();
+      $(".pros_and_cons").fadeIn();
+    });
+    
+    $('.answer-actions .plus').click(function(e) {
+      e.preventDefault();
+      ++lastAnswerChar;
+      $(".answer-inputs").append("<input name='answer' type='text' placeholder='Answer " + String.fromCharCode(lastAnswerChar) + "'/>");
+    });
+
+    $('.answer-actions .minus').click(function(e) {
+      e.preventDefault();
+      lastAnswerChar--;
+      $(".answer-inputs input").last().remove();
+    });
+    
+    $('.pro-actions .plus').click(function(e) {
+      e.preventDefault();
+      $(".pro-inputs").append("&nbsp;<input name='pro' type='text' placeholder='Example: I like it.'/>");
+    });
+
+    $('.pro-actions .minus').click(function(e) {
+      e.preventDefault();
+      $(".pro-inputs input").last().remove();
+    });
+    
+    $('.con-actions .plus').click(function(e) {
+      e.preventDefault();
+      $(".con-inputs").append("&nbsp;<input name='con' type='text' placeholder='Example: It's not legal.'/>");
+    });
+
+    $('.con-actions .minus').click(function(e) {
+      e.preventDefault();
+      $(".con-inputs input").last().remove();
+    });
+    
+    $('.ask_crowd').click(function(e) {
+      e.preventDefault();
+      var q = $(".question").val();
+      
+      var answers = [];
+      $(".answer-inputs input").each(function(i, answer) {
+        answers.push($(answer).val());
+      });
+
+      var template = _.template($("#posted-question-template").html());
+      $(".posted-questions ul").prepend(template({question: q, answers: answers}));
+    });
+    
+    function buildProfile() {
+      window.location = "/test";
+    }
+    
+    $(".build_profile").click(function() {
+      buildProfile();
+    });
+
+    $(".build_profile_right").click(function() {
+      buildProfile();
+    });
+  });

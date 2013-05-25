@@ -1,0 +1,87 @@
+!!! Strict
+%html{:lang => "en"}
+  %head
+    %meta{:charset => "utf-8"}
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
+
+    %title
+      Pythia
+    %script{:src => "//code.jquery.com/jquery-1.10.0.min.js", :type => "text/javascript"}
+    / %script{:src => "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js", :type => "text/javascript"}
+    %script{:src => "/js/bootstrap.min.js", :type => "text/javascript"}
+    %script{:src => "/underscore.js", :type => "text/javascript"}
+    %link{:href => "/bootstrap.min.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}
+    %link{:href => "/main.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}
+    %link{:href => "/custom-styles.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}
+
+    %link{:href => "/font-awesome.min.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}
+    / %link{:href => "/main.css", rel: "stylesheet", type: "text/css"}
+    :css 
+      .build_profile .field {
+        color: #666;
+      }
+  
+      .build_profile_right .field {
+        color: #666;
+      }
+    
+      .build_profile .label {
+        color: white;
+    
+      }
+  
+      .build_profile {
+        width: 300px;      
+      }
+  
+      .build_profile_right {
+        margin-top: 10px;
+      }
+    
+  %body
+    .navbar.navbar-inverse.navbar-fixed-top
+      .navbar-inner
+        .container
+          %button.btn.btn-navbar{"data-target" => ".nav-collapse", "data-toggle" => "collapse", :type => "button"}
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          %a.brand{:href => "#"}
+            %img(src="http://themearmada.com/demos/breakroom/img/logo.png")
+
+          .nav-collapse.collapse
+            %ul.nav
+              %li.active
+                %a{:href => "#"} Home
+              %li
+                %a{:href => "#about"} Answers (12)
+              %li.build_profile
+                .progress-bar
+                  .progress
+                    %span.field
+                      Complete your profile
+                    %span.field-value.fade-in 15%
+                    .bar{style: "width: 15%;"}
+                    
+          .build_profile_right.pull-right
+            .progress-bar{style: "width: 300px;"}
+              .progress
+                %span.field
+                  Complete your profile
+                %span.field-value.fade-in 15%
+                .bar{style: "width: 15%;"}
+                    
+    .container.main
+      = yield
+
+
+%script{type: "text/html", id: "posted-question-template"}
+  %li.well.posted-question 
+    .left-half>
+      .text <%= question %>
+    .right-half
+      .choices
+        <% _.each(answers, function(answer) { %>
+        .btn.btn-small.m-btn <%= answer %>
+        <% }); %>
+  
