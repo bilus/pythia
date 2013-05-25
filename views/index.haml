@@ -18,10 +18,11 @@
     / %link{:href => "/main.css", rel: "stylesheet", type: "text/css"}
 
     :css
+    
       body {
-        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+        margin-top: 120px;
       }
-      
+    
       .posted-questions {
         margin-top: 50px;
       }
@@ -93,7 +94,26 @@
         width: 90%;
       }
       
+      .build_profile .label {
+        color: white;
+        
+      }
       
+      .build_profile {
+        width: 300px;      
+      }
+      
+      .build_profile .field {
+        color: #666;
+      }
+      
+      .build_profile_right .field {
+        color: #666;
+      }
+
+      .build_profile_right {
+        margin-top: 10px;
+      }
       
     :javascript
       $(function() {
@@ -146,7 +166,18 @@
 
           var template = _.template($("#posted-question-template").html());
           $(".posted-questions ul").prepend(template({question: q, answers: answers}));
-          
+        });
+        
+        function buildProfile() {
+          window.location = "/test";
+        }
+        
+        $(".build_profile").click(function() {
+          buildProfile();
+        });
+
+        $(".build_profile_right").click(function() {
+          buildProfile();
         });
       });
 
@@ -167,7 +198,21 @@
                 %a{:href => "#"} Home
               %li
                 %a{:href => "#about"} Answers (12)
-    
+              %li.build_profile
+                .progress-bar
+                  .progress
+                    %span.field
+                      Complete your profile
+                    %span.field-value.fade-in 15%
+                    .bar{style: "width: 15%;"}
+          .build_profile_right.pull-right
+            .progress-bar{style: "width: 300px;"}
+              .progress
+                %span.field
+                  Complete your profile
+                %span.field-value.fade-in 15%
+                .bar{style: "width: 15%;"}
+                    
     .container.main
       .row
         .span6.middle.offset3

@@ -4,3 +4,24 @@
    ========================================================================== */ 
 
 
+@media (max-width: 979px) {
+
+  .build_profile_right {
+    display: none;
+  }
+  
+  .build_profile {
+    display: block;
+  }
+}
+
+@media (min-width: 980px) {
+
+  .build_profile_right {
+    display: block;
+  }
+  
+  .build_profile {
+    display: none;
+  }
+}
