@@ -6,6 +6,10 @@
 
 @media (max-width: 979px) {
 
+  body {
+    margin-top: 0;
+  }
+
   .build_profile_right {
     display: none;
   }
@@ -16,6 +20,10 @@
 }
 
 @media (min-width: 980px) {
+
+  body {
+    margin-top: 98px;
+  }
 
   .build_profile_right {
     display: block;

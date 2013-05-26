@@ -7,3 +7,7 @@ end
 get '/test' do
   haml :test
 end
+
+get '/vote' do
+  haml :vote
+end

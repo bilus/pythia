@@ -39,7 +39,7 @@
           %button.btn.btn-primary.btn-large.ask_crowd.btn-main
             %strong 
               %i.icon-globe
-              Ask the crowd
+              Ask crowd
       
         .right-half
           %button.btn.btn-primary.btn-large.btn-main.ask_friends
@@ -48,35 +48,15 @@
               Ask friends
 .row
   .span6.offset3.posted-questions
-    %h4
+    %h3
       %i.icon-globe
       Questions from the crowd
     %ul
-      %li.well.posted-question 
-        .left-half>
-          .text Should I change my job?
-        .right-half
-          .choices
-            .btn.btn-small.m-btn Yes
-            .btn.btn-small.m-btn No
-      %li.well.posted-question 
-        .left-half>
-          .text What car should I choose for my family?
-        .right-half
-          .choices
-            .btn.btn-small.m-btn Ford Mondeo
-            .btn.btn-small.m-btn Maybach
-      %li.well.posted-question 
-        .left-half>
-          .text Should I launch a startup???????
-        .right-half
-          .choices
-            .btn.btn-small.m-btn Well, yes...
-            .btn.btn-small.m-btn Never in your life!
+
 
 
 %script{type: "text/html", id: "posted-question-template"}
-  %li.well.posted-question 
+  %li.boxed.posted-question 
     .left-half>
       .text <%= question %>
     .right-half
@@ -86,6 +66,27 @@
         <% }); %>
   
 :css
+
+  .answer-inputs input {
+    margin-bottom: 5px;
+  }
+  
+  .pro-inputs input {
+    margin-bottom: 5px;
+  }
+  
+  .con-inputs input {
+    margin-bottom: 5px;
+  }
+  
+  .posted-question .left-half {
+    vertical-align: top;
+  }
+  
+  .posted-question .btn {
+    display: block;
+    clear: left;
+  }
 
   .posted-questions {
     margin-top: 50px;
@@ -97,6 +98,8 @@
   
   .posted-question {
     list-style: none;
+    padding: 10px 15px 10px 15px;
+    margin-bottom: 10px;
   }
   
   .question {
@@ -107,25 +110,7 @@
 
   .form-footer {
     width: 100%;
-    margin-top: 10px;
-  }
-  
-  .left-half, .right-half {
-    display: inline-block;
-    position: relative;
-    width: 50%;
-  }
-
-  .left-half {
-    text-align: left;
-  }
-
-  .right-half {
-    text-align: right;
-  }
-  
-  body {
-    // background-color: #EFEFEF;
+    margin-top: 20px;
   }
   
   .answers {
@@ -141,7 +126,7 @@
     display: none;
     // background-color: #EFEFEF;
     margin: 30px 0 0 0;
-    padding: 5px;
+    padding: 0;
   }
   
   .pros, .cons {
@@ -158,9 +143,10 @@
     width: 90%;
   }
   
-  .ask_crowd, .ask_friends {
-    height: 70px;
+  .choices {
+    margin-left: 5px;
   }
+  
   
   
 :javascript
@@ -203,6 +189,13 @@
       $(".con-inputs input").last().remove();
     });
     
+    function postQuestion(question, answers, animate) {
+      var template = _.template($("#posted-question-template").html());
+      if (animate)
+        $(".question-form .question").effect('transfer', {to: '.posted-questions ul'});
+      $(".posted-questions ul").prepend(template({question: question, answers: answers}));
+    }
+    
     $('.ask_crowd').click(function(e) {
       e.preventDefault();
       var q = $(".question").val();
@@ -212,8 +205,7 @@
         answers.push($(answer).val());
       });
 
-      var template = _.template($("#posted-question-template").html());
-      $(".posted-questions ul").prepend(template({question: q, answers: answers}));
+      postQuestion(q, answers, true);
     });
     
     function buildProfile() {
@@ -227,4 +219,11 @@
     $(".build_profile_right").click(function() {
       buildProfile();
     });
+    
+    
+    //----- 
+  
+    postQuestion("Should I launch a startup???", ['Well, sort of...', 'Never in your life!']);
+    postQuestion("Should I change my job?", ['Yes', 'No']);
+    postQuestion("What car should I choose?", ['Volkswagen Beetle', 'Maybach']);
   });

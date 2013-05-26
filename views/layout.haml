@@ -7,6 +7,7 @@
     %title
       Pythia
     %script{:src => "//code.jquery.com/jquery-1.10.0.min.js", :type => "text/javascript"}
+    %script{:src => "/jquery-ui-1.10.3.custom.js", :type => "text/javascript"}
     / %script{:src => "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js", :type => "text/javascript"}
     %script{:src => "/js/bootstrap.min.js", :type => "text/javascript"}
     %script{:src => "/underscore.js", :type => "text/javascript"}
@@ -17,9 +18,6 @@
     %link{:href => "/font-awesome.min.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}
     / %link{:href => "/main.css", rel: "stylesheet", type: "text/css"}
     :css 
-      body {
-        margin-top: 120px;
-      }
 
       .build_profile .field {
         color: #666;
@@ -42,6 +40,20 @@
         margin-top: 10px;
       }
     
+      .left-half, .right-half {
+        display: inline-block;
+        position: relative;
+        width: 50%;
+      }
+
+      .left-half {
+        text-align: left;
+      }
+
+      .right-half {
+        text-align: right;
+      }
+  
   %body
     .navbar.navbar-inverse.navbar-fixed-top
       .navbar-inner
@@ -50,7 +62,7 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %a.brand{:href => "#"}
+          %a.brand{:href => "/"}
             %img(src="http://themearmada.com/demos/breakroom/img/logo.png")
 
           .nav-collapse.collapse
