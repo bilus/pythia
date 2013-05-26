@@ -85,7 +85,7 @@ get "/" do
   if params["fb_source"] == "notification"
     haml :vote
   else
-    erb :ask
+    haml :index
   end
 end
 
