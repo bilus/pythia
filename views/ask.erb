@@ -99,7 +99,7 @@
           appId      : "<%= @app['id'] %>",                     // App ID
           channelUrl : "<%= url_no_scheme('/channel.html') %>", // Channel File
           status     : true,                                    // check login status
-          cookie     : true,                                    // enable cookies to allow the server to access the session
+          cookie     : true,                                    // enable cookiqes to allow the server to access the session
           xfbml      : true                                     // parse XFBML
         });
 
@@ -128,6 +128,7 @@
     </script>
 
     <header class="clearfix">
+      <%= @user.inspect %>
       <% if @user %>
           <p id="picture" style="background-image: url(https://graph.facebook.com/<%= @user['id'] %>/picture?type=normal)"></p>
           <div>

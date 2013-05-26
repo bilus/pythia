@@ -102,7 +102,6 @@ get "/preview/logged_out" do
   redirect '/'
 end
 
-
 # Allows for direct oauth authentication
 get "/auth/facebook" do
   session[:access_token] = nil
