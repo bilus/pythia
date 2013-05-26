@@ -3,14 +3,16 @@
   %head
     %meta{:charset => "utf-8"}
     %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
-    %meta{:content => @app['name'], :property => "og:title"}/
-    %meta{:content => "website", :property => "og:type"}/
-    %meta{:content => url, :property => "og:url"}/
-    %meta{:content => url('/logo.png'), :property => "og:image"}/
-    %meta{:content => @app['name'], :property => "og:site_name"}/
-    %meta{:content => "My First App", :property => "og:description"}/
-    %meta{:content => @app['name'], :property => "fb:app_id"}/
-    %script{:src => "/jquery-1.7.1.min.js", :type => "text/javascript"}
+    
+    -if @app
+      %meta{:content => @app['name'], :property => "og:title"}/
+      %meta{:content => "website", :property => "og:type"}/
+      %meta{:content => url, :property => "og:url"}/
+      %meta{:content => url('/logo.png'), :property => "og:image"}/
+      %meta{:content => @app['name'], :property => "og:site_name"}/
+      %meta{:content => "My First App", :property => "og:description"}/
+      %meta{:content => @app['name'], :property => "fb:app_id"}/
+      %script{:src => "/jquery-1.7.1.min.js", :type => "text/javascript"}
     
     
     %title

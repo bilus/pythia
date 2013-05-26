@@ -66,7 +66,8 @@ error(Koala::Facebook::APIError) do
   redirect "/auth/facebook"
 end
 
-get "/" do
+get "/fb" do
+  puts params.inspect
   # Get base API Connection
   @graph  = Koala::Facebook::API.new(access_token)
 
@@ -85,14 +86,14 @@ get "/" do
   if params["fb_source"] == "notification"
     haml :vote
   else
-    haml :index
+    erb :ask
   end
 end
 
 
 # used by Canvas apps - redirect the POST to be a regular GET
 post "/" do
-  redirect "/"
+  redirect "/fb"
 end
 
 # used to close the browser window opened to post to wall/send to friends
@@ -121,7 +122,7 @@ end
 
 ###############################
 
-get '/home/?' do
+get '/' do
   haml :index
 end
 
