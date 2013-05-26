@@ -1,5 +1,12 @@
 #fb-root
 
+:javascript 
+  $(function() {
+    $(".ask_friends").click(function() {
+      window.location = "https://apps.facebook.com/pythiaapp/?app_data=ask";
+    });
+  });
+
 -if @app
   :javascript
      window.fbAsyncInit = function() {

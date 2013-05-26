@@ -83,17 +83,20 @@ get "/fb" do
     @friends_using_app = @graph.fql_query("SELECT uid, name, is_app_user, pic_square FROM user WHERE uid in (SELECT uid2 FROM friend WHERE uid1 = me()) AND is_app_user = 1")
   end
   
-  if params["fb_source"] == "notification"
-    haml :vote
-  else
+  if params["app_data"] == "ask"
+    
+  # if params["fb_source"] == "notification"
+  #   haml :vote
+  # else
     erb :ask
+  else
+    haml :index
   end
 end
 
 
 # used by Canvas apps - redirect the POST to be a regular GET
 post "/" do
-  puts params.inspect
   redirect "/fb?app_data=#{params["app_data"]}"
 end
 
