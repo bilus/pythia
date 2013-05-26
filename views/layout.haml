@@ -53,6 +53,21 @@
       .right-half {
         text-align: right;
       }
+    :javascript
+      $(function() {
+        function buildProfile() {
+          window.location = "/test";
+        }
+  
+        $(".build_profile").click(function() {
+          buildProfile();
+        });
+
+        $(".build_profile_right").click(function() {
+          buildProfile();
+        });
+      });
+    
   
   %body
     .navbar.navbar-inverse.navbar-fixed-top

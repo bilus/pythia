@@ -11,3 +11,7 @@ end
 get '/vote' do
   haml :vote
 end
+
+get '/answers' do
+  haml :answers
+end
