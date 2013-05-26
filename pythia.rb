@@ -71,7 +71,6 @@ get "/" do
 
   # Get public details of current application
   @app  =  @graph.get_object(ENV["FACEBOOK_APP_ID"])
-  @access_tokenxx = access_token
   if access_token
     @user    = @graph.get_object("me")
     @friends = @graph.get_connections('me', 'friends')
@@ -116,22 +115,22 @@ end
 
 ###############################
 
-# get '/' do
-#   haml :index
-# end
-# 
-# get '/test' do
-#   haml :test
-# end
-# 
-# get '/vote' do
-#   haml :vote
-# end
-# 
-# get '/answers' do
-#   haml :answers
-# end
-# 
-# get '/ask' do
-#   erb :ask
-# end
+get '/home/?' do
+  haml :index
+end
+
+get '/test' do
+  haml :test
+end
+
+get '/vote' do
+  haml :vote
+end
+
+get '/answers' do
+  haml :answers
+end
+
+get '/ask' do
+  erb :ask
+end
