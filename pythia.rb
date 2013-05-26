@@ -93,7 +93,8 @@ end
 
 # used by Canvas apps - redirect the POST to be a regular GET
 post "/" do
-  redirect "/fb"
+  puts params.inspect
+  redirect "/fb?app_data=#{params["app_data"]}"
 end
 
 # used to close the browser window opened to post to wall/send to friends
